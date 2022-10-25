@@ -1,0 +1,15 @@
+/home/gordon/git/dotnet-tests/di-test/bin/Debug/net6.0/di-test
+/home/gordon/git/dotnet-tests/di-test/bin/Debug/net6.0/di-test.deps.json
+/home/gordon/git/dotnet-tests/di-test/bin/Debug/net6.0/di-test.runtimeconfig.json
+/home/gordon/git/dotnet-tests/di-test/bin/Debug/net6.0/di-test.dll
+/home/gordon/git/dotnet-tests/di-test/bin/Debug/net6.0/di-test.pdb
+/home/gordon/git/dotnet-tests/di-test/obj/Debug/net6.0/di-test.csproj.AssemblyReference.cache
+/home/gordon/git/dotnet-tests/di-test/obj/Debug/net6.0/di-test.GeneratedMSBuildEditorConfig.editorconfig
+/home/gordon/git/dotnet-tests/di-test/obj/Debug/net6.0/di-test.AssemblyInfoInputs.cache
+/home/gordon/git/dotnet-tests/di-test/obj/Debug/net6.0/di-test.AssemblyInfo.cs
+/home/gordon/git/dotnet-tests/di-test/obj/Debug/net6.0/di-test.csproj.CoreCompileInputs.cache
+/home/gordon/git/dotnet-tests/di-test/obj/Debug/net6.0/di-test.dll
+/home/gordon/git/dotnet-tests/di-test/obj/Debug/net6.0/refint/di-test.dll
+/home/gordon/git/dotnet-tests/di-test/obj/Debug/net6.0/di-test.pdb
+/home/gordon/git/dotnet-tests/di-test/obj/Debug/net6.0/di-test.genruntimeconfig.cache
+/home/gordon/git/dotnet-tests/di-test/obj/Debug/net6.0/ref/di-test.dll

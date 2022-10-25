@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "7NHExEg7gnx6R8MGXPXmjVNJ7bBV6o7/ybDYcNxzrpe9wAvd51IQTKzGo/4pqbpByhgnspCoJOnprIF51bmQ+w==",
+  "success": true,
+  "projectFilePath": "/home/gordon/git/dotnet-tests/di-test/di-test.csproj",
+  "expectedPackageFiles": [
+    "/home/gordon/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.9/microsoft.aspnetcore.app.ref.6.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}

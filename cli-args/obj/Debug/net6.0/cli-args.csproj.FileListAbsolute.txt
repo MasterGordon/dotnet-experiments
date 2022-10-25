@@ -1,0 +1,15 @@
+/home/gordon/git/dotnet-tests/cli-args/obj/Debug/net6.0/cli-args.csproj.AssemblyReference.cache
+/home/gordon/git/dotnet-tests/cli-args/obj/Debug/net6.0/cli-args.GeneratedMSBuildEditorConfig.editorconfig
+/home/gordon/git/dotnet-tests/cli-args/obj/Debug/net6.0/cli-args.AssemblyInfoInputs.cache
+/home/gordon/git/dotnet-tests/cli-args/obj/Debug/net6.0/cli-args.AssemblyInfo.cs
+/home/gordon/git/dotnet-tests/cli-args/obj/Debug/net6.0/cli-args.csproj.CoreCompileInputs.cache
+/home/gordon/git/dotnet-tests/cli-args/bin/Debug/net6.0/cli-args
+/home/gordon/git/dotnet-tests/cli-args/bin/Debug/net6.0/cli-args.deps.json
+/home/gordon/git/dotnet-tests/cli-args/bin/Debug/net6.0/cli-args.runtimeconfig.json
+/home/gordon/git/dotnet-tests/cli-args/bin/Debug/net6.0/cli-args.dll
+/home/gordon/git/dotnet-tests/cli-args/bin/Debug/net6.0/cli-args.pdb
+/home/gordon/git/dotnet-tests/cli-args/obj/Debug/net6.0/cli-args.dll
+/home/gordon/git/dotnet-tests/cli-args/obj/Debug/net6.0/refint/cli-args.dll
+/home/gordon/git/dotnet-tests/cli-args/obj/Debug/net6.0/cli-args.pdb
+/home/gordon/git/dotnet-tests/cli-args/obj/Debug/net6.0/cli-args.genruntimeconfig.cache
+/home/gordon/git/dotnet-tests/cli-args/obj/Debug/net6.0/ref/cli-args.dll
