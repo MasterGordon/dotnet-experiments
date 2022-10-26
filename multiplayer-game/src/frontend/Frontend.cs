@@ -21,6 +21,12 @@ class Frontend : IFrontend
             {
                 System.Environment.Exit(0);
             }
+            // Console.WriteLine("new key event");
+            // Console.WriteLine(e.key.repeat);
+            // Console.WriteLine(e.key.keysym.scancode);
+            // Console.WriteLine(e.key.keysym.sym);
+            // Console.WriteLine(e.key.keysym.unicode);
+            // Console.WriteLine(e.type);
             if (e.type == SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0)
             {
                 var movementInput = ctx.FrontendGameState.movementInput;
@@ -63,9 +69,18 @@ class Frontend : IFrontend
                 }
                 ctx.FrontendGameState.movementInput = movementInput;
             }
-            if (e.key.keysym.scancode is
-                SDL_Scancode.SDL_SCANCODE_A or SDL_Scancode.SDL_SCANCODE_D or SDL_Scancode.SDL_SCANCODE_W or SDL_Scancode.SDL_SCANCODE_S)
+            if (
+                e.key.keysym.scancode
+                    is SDL_Scancode.SDL_SCANCODE_A
+                        or SDL_Scancode.SDL_SCANCODE_D
+                        or SDL_Scancode.SDL_SCANCODE_W
+                        or SDL_Scancode.SDL_SCANCODE_S
+                && e.key.repeat == 0
+                && e.type is SDL_EventType.SDL_KEYDOWN or SDL_EventType.SDL_KEYUP
+            )
             {
+                if (e.key.repeat == 1)
+                    continue;
                 var movement = ctx.FrontendGameState.movementInput;
                 if (movement.Length() > 0)
                     movement = Vector2.Normalize(movement);

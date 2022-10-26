@@ -4,30 +4,30 @@ class MultiPlayerGame : Game
 
     public MultiPlayerGame(bool isHost)
     {
-        var window = new Window("MultiPlayerGame", 1200, 800);
+        var window = new Window("MultiPlayerGame" + (isHost ? " - host" : ""), 1200, 800);
         if (isHost)
         {
             this.ctx = new Context(
-                    isHost,
-                    new Backend(),
-                    new Frontend(),
-                    new GameState(),
-                    new FrontendGameState(),
-                    new Renderer(window),
-                    window
-                );
+                isHost,
+                new Backend(),
+                new Frontend(),
+                new GameState(),
+                new FrontendGameState(),
+                new Renderer(window),
+                window
+            );
         }
         else
         {
             this.ctx = new Context(
-                    isHost,
-                    new RemoteBackend(),
-                    new Frontend(),
-                    new GameState(),
-                    new FrontendGameState(),
-                    new Renderer(window),
-                    window
-                );
+                isHost,
+                new RemoteBackend(),
+                new Frontend(),
+                new GameState(),
+                new FrontendGameState(),
+                new Renderer(window),
+                window
+            );
         }
         ctx.Backend.Init();
         ctx.Frontend.Init();

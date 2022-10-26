@@ -15,14 +15,16 @@ class ResourceLoader
         Console.WriteLine("Loading resource: " + resourceName);
         return File.ReadAllText(ToPath(resourceName));
 #endif
-        using var stream = this.GetType().Assembly.GetManifestResourceStream($"{this.assemblyName}.{resourceName}");
+        using var stream = this.GetType()
+            .Assembly.GetManifestResourceStream($"{this.assemblyName}.{resourceName}");
         using var reader = new StreamReader(stream!);
         return reader.ReadToEnd();
     }
 
     public byte[] LoadBytes(string resourceName)
     {
-        using var stream = this.GetType().Assembly.GetManifestResourceStream($"{this.assemblyName}.{resourceName}");
+        using var stream = this.GetType()
+            .Assembly.GetManifestResourceStream($"{this.assemblyName}.{resourceName}");
         using var memoryStream = new MemoryStream();
         stream!.CopyTo(memoryStream);
         return memoryStream.ToArray();

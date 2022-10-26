@@ -10,13 +10,13 @@ class Context
     public static Context? instance { get; set; }
 
     public Context(
-          bool isHost,
-          IBackend backend,
-          IFrontend frontend,
-          GameState gameState,
-          FrontendGameState frontendGameState,
-          Renderer renderer,
-          Window window
+        bool isHost,
+        IBackend backend,
+        IFrontend frontend,
+        GameState gameState,
+        FrontendGameState frontendGameState,
+        Renderer renderer,
+        Window window
     )
     {
         this.IsHost = isHost;

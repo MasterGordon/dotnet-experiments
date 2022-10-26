@@ -1,6 +1,4 @@
-enum Sound
-{
-}
+enum Sound { }
 
 class AudioPlayer
 {

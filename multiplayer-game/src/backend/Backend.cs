@@ -6,11 +6,9 @@ using WatsonTcp;
 class Backend : IBackend
 {
     private WatsonTcpServer server;
-    private int nextId = 0;
 
     public void Process(double dt)
     {
-        nextId++;
         var ctx = Context.Get();
         ctx.GameState.PlayerPositions.ForEach(player =>
         {
@@ -24,20 +22,25 @@ class Backend : IBackend
         var gameState = Context.Get().GameState;
         if (packet is MovePacket movePacket)
         {
-            if (gameState.PlayerPositions.Find(player => player.name == movePacket.playerName) is Player player)
+            if (
+                gameState.PlayerPositions.Find(player => player.name == movePacket.playerName)
+                is Player player
+            )
             {
-                player.movement = movePacket.movement;
+                player.movement = movePacket.movement * 4;
             }
         }
         if (packet is ConnectPacket connectPacket)
         {
             Console.WriteLine($"Player {connectPacket.playerName} connected");
-            gameState.PlayerPositions.Add(new Player
-            {
-                name = connectPacket.playerName,
-                position = new Vector2(50, 50),
-                movement = new Vector2(0, 0)
-            });
+            gameState.PlayerPositions.Add(
+                new Player
+                {
+                    name = connectPacket.playerName,
+                    position = new Vector2(50, 50),
+                    movement = new Vector2(0, 0)
+                }
+            );
         }
         this.sendGameState();
     }
@@ -74,6 +77,7 @@ class Backend : IBackend
 
     private void messageReceived(object? sender, MessageReceivedEventArgs args)
     {
+        var time = DateTime.Now;
         Console.WriteLine("Message Received: " + args.IpPort);
         var packet = Converter.ParsePacket(args.Data);
         Console.WriteLine("Received packet: " + packet);
@@ -81,13 +85,16 @@ class Backend : IBackend
         {
             this.ProcessPacket(packet);
         }
+        Console.WriteLine(DateTime.Now - time);
     }
 
     private void sendGameState()
     {
-        if (server == null) return;
+        if (server == null)
+            return;
         var clients = server.ListClients();
-        if (clients.Count() == 0) return;
+        if (clients.Count() == 0)
+            return;
         var gameState = Context.Get().GameState;
         var json = JsonConvert.SerializeObject(gameState);
         var bytes = Encoding.UTF8.GetBytes(json);

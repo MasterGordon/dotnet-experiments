@@ -9,7 +9,11 @@ class Renderer
 
     public Renderer(Window window)
     {
-        this.renderer = SDL_CreateRenderer(window.GetWindow(), -1, SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
+        this.renderer = SDL_CreateRenderer(
+            window.GetWindow(),
+            -1,
+            SDL_RendererFlags.SDL_RENDERER_ACCELERATED
+        );
     }
 
     public void Clear()

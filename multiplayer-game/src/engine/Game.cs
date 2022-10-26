@@ -1,6 +1,6 @@
 abstract class Game
 {
-    public const int TPS = 64;
+    public const int TPS = 128;
     private Queue<int> fpsQueue = new Queue<int>();
     protected abstract void update(double dt);
     protected abstract void draw();

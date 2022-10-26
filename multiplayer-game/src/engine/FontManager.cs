@@ -17,7 +17,8 @@ class FontManager
 
     public void RegisterFont(string name, string path, int fontSize)
     {
-        if (fonts.ContainsKey(name)) return;
+        if (fonts.ContainsKey(name))
+            return;
         var res = resourceLoader.LoadToIntPtr(path);
         var sdlBuffer = SDL_RWFromConstMem(res.ptr, res.size);
         var font = TTF_OpenFontRW(sdlBuffer, 1, fontSize);

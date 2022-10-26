@@ -6,7 +6,14 @@ class Window
 
     public Window(string title, int w, int h)
     {
-        window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WindowFlags.SDL_WINDOW_VULKAN | SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
+        window = SDL_CreateWindow(
+            title,
+            SDL_WINDOWPOS_CENTERED,
+            SDL_WINDOWPOS_CENTERED,
+            w,
+            h,
+            SDL_WindowFlags.SDL_WINDOW_VULKAN | SDL_WindowFlags.SDL_WINDOW_RESIZABLE
+        );
     }
 
     public Window(string title, int x, int y, int w, int h, SDL_WindowFlags flags)
@@ -26,7 +33,8 @@ class Window
 
     public (int width, int height) GetSize()
     {
-        int w, h;
+        int w,
+            h;
         SDL_GetWindowSize(this.window, out w, out h);
         return (w, h);
     }

@@ -4,9 +4,7 @@ class OnECSEvent : Attribute
     public EventPriority Priority = EventPriority.Normal;
 }
 
-class OnTickEvent : OnECSEvent
-{
-}
+class OnTickEvent : OnECSEvent { }
 
 struct TickEvent
 {

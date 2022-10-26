@@ -2,7 +2,10 @@ using static SDL2.SDL;
 
 class Color
 {
-    int r, g, b, a;
+    int r,
+        g,
+        b,
+        a;
 
     public Color(int r, int g, int b, int a)
     {

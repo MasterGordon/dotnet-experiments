@@ -8,7 +8,11 @@ class RemoteBackend : IBackend
 
     public void Process(double dt)
     {
-
+        // var ctx = Context.Get();
+        // ctx.GameState.PlayerPositions.ForEach(player =>
+        // {
+        //     player.position += player.movement;
+        // });
     }
 
     public void ProcessPacket(ValueType packet)
@@ -19,6 +23,11 @@ class RemoteBackend : IBackend
     }
 
     public void Init()
+    {
+        Task.Run(this.Run);
+    }
+
+    public void Run()
     {
         client = new WatsonTcpClient("127.0.0.1", 42069);
         client.Events.MessageReceived += (sender, args) =>
