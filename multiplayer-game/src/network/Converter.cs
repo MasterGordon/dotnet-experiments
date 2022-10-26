@@ -19,9 +19,11 @@ class Converter
             throw new System.Exception("Packet has no type");
         }
         var packetType = type.Value<string>();
+        Console.WriteLine("Packet type: " + packetType);
         return packetType switch
         {
             "move" => parsedRaw.ToObject<MovePacket>(),
+            "connect" => parsedRaw.ToObject<ConnectPacket>(),
             _ => throw new System.Exception("Unknown packet type")
         };
     }

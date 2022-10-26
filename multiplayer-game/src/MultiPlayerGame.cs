@@ -29,8 +29,8 @@ class MultiPlayerGame : Game
                     window
                 );
         }
-        ctx.Frontend.Init();
         ctx.Backend.Init();
+        ctx.Frontend.Init();
     }
 
     protected override void draw()

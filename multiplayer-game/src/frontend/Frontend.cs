@@ -3,9 +3,12 @@ using static SDL2.SDL;
 
 class Frontend : IFrontend
 {
+    private string playerName = "Player";
+
     public void Init()
     {
-        var conntectPacket = new ConnectPacket("Gordon");
+        this.playerName = Context.Get().IsHost ? "Host" : "Client";
+        var conntectPacket = new ConnectPacket(playerName);
         Context.Get().Backend.ProcessPacket(conntectPacket);
     }
 
@@ -66,7 +69,7 @@ class Frontend : IFrontend
                 var movement = ctx.FrontendGameState.movementInput;
                 if (movement.Length() > 0)
                     movement = Vector2.Normalize(movement);
-                ctx.Backend.ProcessPacket(new MovePacket("Gordon", movement));
+                ctx.Backend.ProcessPacket(new MovePacket(playerName, movement));
             }
             if (e.key.keysym.scancode == SDL_Scancode.SDL_SCANCODE_ESCAPE)
             {
@@ -75,9 +78,12 @@ class Frontend : IFrontend
         }
 
         ctx.Renderer.Clear();
-        ctx.Renderer.SetColor(255, 0, 0, 255);
         ctx.GameState.PlayerPositions.ForEach(player =>
         {
+            if (player.name == playerName)
+                ctx.Renderer.SetColor(0, 0, 255, 255);
+            else
+                ctx.Renderer.SetColor(255, 0, 0, 255);
             ctx.Renderer.DrawRect(player.position.X, player.position.Y, 10, 10);
         });
         ctx.Renderer.Present();
