@@ -6,6 +6,7 @@ using WatsonTcp;
 class Backend : IBackend
 {
     private WatsonTcpServer server;
+    private Publisher publisher;
     private Queue<ValueType> pendingPackets = new Queue<ValueType>();
 
     public void Process(double dt)
@@ -25,35 +26,16 @@ class Backend : IBackend
 
     public void ProcessPacket(ValueType packet)
     {
-        var gameState = Context.Get().GameState;
-        if (packet is MovePacket movePacket)
-        {
-            if (
-                gameState.PlayerPositions.Find(player => player.name == movePacket.playerName)
-                is Player player
-            )
-            {
-                player.movement = movePacket.movement * 4;
-            }
-        }
-        if (packet is ConnectPacket connectPacket)
-        {
-            Console.WriteLine($"Player {connectPacket.playerName} connected");
-            gameState.PlayerPositions.Add(
-                new Player
-                {
-                    name = connectPacket.playerName,
-                    position = new Vector2(50, 50),
-                    movement = new Vector2(0, 0)
-                }
-            );
-        }
+        this.publisher.Publish(packet);
         this.sendGameState();
     }
 
     public void Init()
     {
         Task.Run(Run);
+        this.publisher = new Publisher(
+            Context.Get().IsHost ? InteractorKind.Server : InteractorKind.Client
+        );
     }
 
     public void Run()

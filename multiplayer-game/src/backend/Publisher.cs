@@ -63,4 +63,16 @@ class Publisher
             }
         }
     }
+
+    public void Publish(ValueType packet)
+    {
+        var type = PacketUtils.GetType(packet);
+        if (subscribers.ContainsKey(type))
+        {
+            foreach (var del in subscribers[type])
+            {
+                del.DynamicInvoke(packet);
+            }
+        }
+    }
 }
