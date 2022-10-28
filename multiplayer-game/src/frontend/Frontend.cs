@@ -21,12 +21,6 @@ class Frontend : IFrontend
             {
                 System.Environment.Exit(0);
             }
-            // Console.WriteLine("new key event");
-            // Console.WriteLine(e.key.repeat);
-            // Console.WriteLine(e.key.keysym.scancode);
-            // Console.WriteLine(e.key.keysym.sym);
-            // Console.WriteLine(e.key.keysym.unicode);
-            // Console.WriteLine(e.type);
             if (e.type == SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0)
             {
                 var movementInput = ctx.FrontendGameState.movementInput;

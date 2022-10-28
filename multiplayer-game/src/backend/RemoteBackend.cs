@@ -8,11 +8,11 @@ class RemoteBackend : IBackend
 
     public void Process(double dt)
     {
-        // var ctx = Context.Get();
-        // ctx.GameState.PlayerPositions.ForEach(player =>
-        // {
-        //     player.position += player.movement;
-        // });
+        var ctx = Context.Get();
+        ctx.GameState.PlayerPositions.ForEach(player =>
+        {
+            player.position += player.movement;
+        });
     }
 
     public void ProcessPacket(ValueType packet)

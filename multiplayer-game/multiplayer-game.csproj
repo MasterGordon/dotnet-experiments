@@ -6,6 +6,7 @@
     <RootNamespace>multiplayer-game</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <PublishTrimmed>true</PublishTrimmed>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
     <PublishReadyToRun>true</PublishReadyToRun>
     <PublishSingleFile>true</PublishSingleFile>
     <Nullable>enable</Nullable>

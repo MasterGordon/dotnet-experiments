@@ -6,15 +6,21 @@ using WatsonTcp;
 class Backend : IBackend
 {
     private WatsonTcpServer server;
+    private Queue<ValueType> pendingPackets = new Queue<ValueType>();
 
     public void Process(double dt)
     {
         var ctx = Context.Get();
+        while (pendingPackets.Count > 0)
+        {
+            var packet = pendingPackets.Dequeue();
+            this.ProcessPacket(packet);
+        }
         ctx.GameState.PlayerPositions.ForEach(player =>
         {
             player.position += player.movement;
         });
-        this.sendGameState();
+        // this.sendGameState();
     }
 
     public void ProcessPacket(ValueType packet)
@@ -83,7 +89,7 @@ class Backend : IBackend
         Console.WriteLine("Received packet: " + packet);
         if (packet != null)
         {
-            this.ProcessPacket(packet);
+            pendingPackets.Enqueue(packet);
         }
         Console.WriteLine(DateTime.Now - time);
     }
