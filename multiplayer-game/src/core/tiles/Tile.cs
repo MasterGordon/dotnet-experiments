@@ -28,6 +28,13 @@ class Tile
     {
         var renderer = Context.Get().Renderer;
         var scale = Context.Get().GameState.Settings.GameScale;
-        renderer.DrawTexture(this.Texture, x * scale, y * scale, 16 * scale, 16 * scale);
+        var camera = Context.Get().FrontendGameState.Camera;
+        renderer.DrawTexture(
+            this.Texture,
+            (x - (int)camera.position.X) * scale,
+            (y - (int)camera.position.Y) * scale,
+            16 * scale,
+            16 * scale
+        );
     }
 }

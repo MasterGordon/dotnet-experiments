@@ -36,3 +36,14 @@ readonly struct TickPacket
         this.tick = tick;
     }
 }
+
+readonly struct SelfMovedPacket
+{
+    public readonly string type = "selfMoved";
+    public readonly Vector2 target;
+
+    public SelfMovedPacket(Vector2 target)
+    {
+        this.target = target;
+    }
+}

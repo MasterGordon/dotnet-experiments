@@ -16,14 +16,14 @@ class Backend : IBackend
         while (pendingPackets.Count > 0)
         {
             var packet = pendingPackets.Dequeue();
-            this.ProcessPacket(packet);
+            this.publisher.Publish(packet);
         }
+        this.sendGameState();
     }
 
     public void ProcessPacket(ValueType packet)
     {
-        this.publisher.Publish(packet);
-        this.sendGameState();
+        pendingPackets.Enqueue(packet);
     }
 
     public void Init()

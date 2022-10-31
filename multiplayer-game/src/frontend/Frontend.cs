@@ -8,12 +8,16 @@ class Frontend : IFrontend
 
     public void Init()
     {
+        var ctx = Context.Get();
         this.playerName = Context.Get().IsHost ? "Host" : "Client";
         var guid = Guid.NewGuid();
-        Context.Get().FrontendGameState.PlayerGuid = guid;
+        ctx.FrontendGameState.PlayerGuid = guid;
         var connectPacket = new ConnectPacket(playerName, guid);
-        Context.Get().Backend.ProcessPacket(connectPacket);
-        Context.Get().TileRegistry.RegisterTile();
+        ctx.Backend.ProcessPacket(connectPacket);
+        ctx.TileRegistry.RegisterTile();
+        var windowSize = ctx.Window.GetSize();
+        ctx.FrontendGameState.WindowWidth = windowSize.width;
+        ctx.FrontendGameState.WindowHeight = windowSize.height;
     }
 
     public void Process()
@@ -32,6 +36,10 @@ class Frontend : IFrontend
                     ctx.FrontendGameState.WindowWidth = e.window.data1;
                     ctx.FrontendGameState.WindowHeight = e.window.data2;
                     Console.WriteLine($"Window resized to {e.window.data1}x{e.window.data2}");
+                    var player = ctx.GameState.Players.Find(
+                        p => p.guid == ctx.FrontendGameState.PlayerGuid
+                    );
+                    ctx.FrontendGameState.Camera.CenterOn(player.position);
                 }
             }
             if (e.type == SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0)
@@ -115,14 +123,21 @@ class Frontend : IFrontend
         }
 
         ctx.Renderer.Clear();
+        var scale = ctx.GameState.Settings.GameScale;
+        var camera = Context.Get().FrontendGameState.Camera;
         new WorldRenderer().Render();
-        ctx.GameState.PlayerPositions.ForEach(player =>
+        ctx.GameState.Players.ForEach(player =>
         {
             if (player.name == playerName)
                 ctx.Renderer.SetColor(0, 0, 255, 255);
             else
                 ctx.Renderer.SetColor(255, 0, 0, 255);
-            ctx.Renderer.DrawRect(player.position.X, player.position.Y, 10, 10);
+            ctx.Renderer.DrawRect(
+                (player.position.X - (int)camera.position.X) * scale,
+                (player.position.Y - (int)camera.position.Y) * scale,
+                10,
+                10
+            );
         });
         ctx.Renderer.Present();
     }

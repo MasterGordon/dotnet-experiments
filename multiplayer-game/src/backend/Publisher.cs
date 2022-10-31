@@ -30,7 +30,7 @@ class Publisher
                     continue;
                 }
                 var attr = (Interaction)attrs2[0];
-                if (attr.Kind != this.kind && attr.Kind != InteractorKind.Hybrid)
+                if (attr.Kind == InteractorKind.Server && this.kind == InteractorKind.Client)
                 {
                     continue;
                 }
@@ -67,8 +67,12 @@ class Publisher
     public void Publish(ValueType packet)
     {
         var type = PacketUtils.GetType(packet);
+        if (type != "tick")
+            Console.WriteLine("Publishing packet: " + type);
         if (subscribers.ContainsKey(type))
         {
+            if (type != "tick")
+                Console.WriteLine("Found " + subscribers[type].Count + " subscribers");
             foreach (var del in subscribers[type])
             {
                 del.DynamicInvoke(packet);
