@@ -17,9 +17,22 @@ readonly struct ConnectPacket
 {
     public readonly string type = "connect";
     public readonly string playerName;
+    public readonly Guid playerGuid;
 
-    public ConnectPacket(string playerName)
+    public ConnectPacket(string playerName, Guid playerGuid)
     {
         this.playerName = playerName;
+        this.playerGuid = playerGuid;
+    }
+}
+
+readonly struct TickPacket
+{
+    public readonly string type = "tick";
+    public readonly uint tick;
+
+    public TickPacket(uint tick)
+    {
+        this.tick = tick;
     }
 }

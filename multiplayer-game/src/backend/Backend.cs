@@ -1,4 +1,3 @@
-using System.Numerics;
 using System.Text;
 using Newtonsoft.Json;
 using WatsonTcp;
@@ -8,20 +7,17 @@ class Backend : IBackend
     private WatsonTcpServer server;
     private Publisher publisher;
     private Queue<ValueType> pendingPackets = new Queue<ValueType>();
+    private uint tick = 0;
 
     public void Process(double dt)
     {
         var ctx = Context.Get();
+        this.ProcessPacket(new TickPacket(tick++));
         while (pendingPackets.Count > 0)
         {
             var packet = pendingPackets.Dequeue();
             this.ProcessPacket(packet);
         }
-        ctx.GameState.PlayerPositions.ForEach(player =>
-        {
-            player.position += player.movement;
-        });
-        // this.sendGameState();
     }
 
     public void ProcessPacket(ValueType packet)
@@ -33,9 +29,7 @@ class Backend : IBackend
     public void Init()
     {
         Task.Run(Run);
-        this.publisher = new Publisher(
-            Context.Get().IsHost ? InteractorKind.Server : InteractorKind.Client
-        );
+        this.publisher = new Publisher(InteractorKind.Server);
     }
 
     public void Run()
@@ -47,7 +41,7 @@ class Backend : IBackend
         server.Start();
     }
 
-    private void clientConnected(object? sender, ConnectionEventArgs args)
+    private void clientConnected(object sender, ConnectionEventArgs args)
     {
         Console.WriteLine("Client connected: " + args.IpPort);
         var gameState = Context.Get().GameState;
@@ -58,12 +52,12 @@ class Backend : IBackend
         }
     }
 
-    private void clientDisconnected(object? sender, DisconnectionEventArgs args)
+    private void clientDisconnected(object sender, DisconnectionEventArgs args)
     {
         Console.WriteLine("Client disconnected: " + args.IpPort);
     }
 
-    private void messageReceived(object? sender, MessageReceivedEventArgs args)
+    private void messageReceived(object sender, MessageReceivedEventArgs args)
     {
         var time = DateTime.Now;
         Console.WriteLine("Message Received: " + args.IpPort);

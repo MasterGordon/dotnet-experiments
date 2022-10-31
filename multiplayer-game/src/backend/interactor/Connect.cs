@@ -14,6 +14,7 @@ class Connect
                 new Player
                 {
                     name = packet.playerName,
+                    guid = packet.playerGuid,
                     position = new Vector2(0, 0),
                     movement = new Vector2(0, 0)
                 }

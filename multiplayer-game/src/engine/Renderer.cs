@@ -108,4 +108,15 @@ class Renderer
     {
         return SDL_CreateTextureFromSurface(renderer, surface);
     }
+
+    public void DrawTexture(IntPtr texture, int x, int y, int w, int h)
+    {
+        SDL_Rect rect = new SDL_Rect();
+        rect.x = x;
+        rect.y = y;
+        rect.w = w;
+        rect.h = h;
+
+        SDL_RenderCopy(renderer, texture, IntPtr.Zero, ref rect);
+    }
 }

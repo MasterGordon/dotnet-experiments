@@ -11,4 +11,14 @@ class Move
             player.movement = packet.movement * 4;
         }
     }
+
+    [Interaction(InteractorKind.Hybrid, "tick")]
+    public static void TickHybrid(TickPacket packet)
+    {
+        var ctx = Context.Get();
+        ctx.GameState.PlayerPositions.ForEach(player =>
+        {
+            player.position += player.movement;
+        });
+    }
 }

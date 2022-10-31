@@ -4,12 +4,16 @@ using static SDL2.SDL;
 class Frontend : IFrontend
 {
     private string playerName = "Player";
+    private bool fullscreen = false;
 
     public void Init()
     {
         this.playerName = Context.Get().IsHost ? "Host" : "Client";
-        var conntectPacket = new ConnectPacket(playerName);
-        Context.Get().Backend.ProcessPacket(conntectPacket);
+        var guid = Guid.NewGuid();
+        Context.Get().FrontendGameState.PlayerGuid = guid;
+        var connectPacket = new ConnectPacket(playerName, guid);
+        Context.Get().Backend.ProcessPacket(connectPacket);
+        Context.Get().TileRegistry.RegisterTile();
     }
 
     public void Process()
@@ -21,9 +25,33 @@ class Frontend : IFrontend
             {
                 System.Environment.Exit(0);
             }
+            if (e.type == SDL_EventType.SDL_WINDOWEVENT)
+            {
+                if (e.window.windowEvent == SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED)
+                {
+                    ctx.FrontendGameState.WindowWidth = e.window.data1;
+                    ctx.FrontendGameState.WindowHeight = e.window.data2;
+                    Console.WriteLine($"Window resized to {e.window.data1}x{e.window.data2}");
+                }
+            }
             if (e.type == SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0)
             {
-                var movementInput = ctx.FrontendGameState.movementInput;
+                var movementInput = ctx.FrontendGameState.MovementInput;
+                if (e.key.keysym.scancode == SDL_Scancode.SDL_SCANCODE_F11)
+                {
+                    if (!fullscreen)
+                    {
+                        SDL_SetWindowFullscreen(
+                            ctx.Window.GetRaw(),
+                            (uint)SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP
+                        );
+                    }
+                    else
+                    {
+                        SDL_SetWindowFullscreen(ctx.Window.GetRaw(), 0);
+                    }
+                    fullscreen = !fullscreen;
+                }
                 if (e.key.keysym.scancode == SDL_Scancode.SDL_SCANCODE_A)
                 {
                     movementInput.X -= 1;
@@ -40,11 +68,11 @@ class Frontend : IFrontend
                 {
                     movementInput.Y += 1;
                 }
-                ctx.FrontendGameState.movementInput = movementInput;
+                ctx.FrontendGameState.MovementInput = movementInput;
             }
             if (e.type == SDL_EventType.SDL_KEYUP && e.key.repeat == 0)
             {
-                var movementInput = ctx.FrontendGameState.movementInput;
+                var movementInput = ctx.FrontendGameState.MovementInput;
                 if (e.key.keysym.scancode == SDL_Scancode.SDL_SCANCODE_A)
                 {
                     movementInput.X += 1;
@@ -61,7 +89,7 @@ class Frontend : IFrontend
                 {
                     movementInput.Y -= 1;
                 }
-                ctx.FrontendGameState.movementInput = movementInput;
+                ctx.FrontendGameState.MovementInput = movementInput;
             }
             if (
                 e.key.keysym.scancode
@@ -75,7 +103,7 @@ class Frontend : IFrontend
             {
                 if (e.key.repeat == 1)
                     continue;
-                var movement = ctx.FrontendGameState.movementInput;
+                var movement = ctx.FrontendGameState.MovementInput;
                 if (movement.Length() > 0)
                     movement = Vector2.Normalize(movement);
                 ctx.Backend.ProcessPacket(new MovePacket(playerName, movement));
@@ -87,6 +115,7 @@ class Frontend : IFrontend
         }
 
         ctx.Renderer.Clear();
+        new WorldRenderer().Render();
         ctx.GameState.PlayerPositions.ForEach(player =>
         {
             if (player.name == playerName)

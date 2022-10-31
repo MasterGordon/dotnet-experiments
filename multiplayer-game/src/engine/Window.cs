@@ -38,4 +38,9 @@ class Window
         SDL_GetWindowSize(this.window, out w, out h);
         return (w, h);
     }
+
+    public IntPtr GetRaw()
+    {
+        return this.window;
+    }
 }

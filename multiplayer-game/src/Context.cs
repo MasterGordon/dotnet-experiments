@@ -7,7 +7,9 @@ class Context
     public FrontendGameState FrontendGameState { get; set; }
     public Window Window { get; set; }
     public Renderer Renderer { get; set; }
-    public static Context? instance { get; set; }
+    public TileRegistry TileRegistry { get; set; }
+    public ResourceLoader ResourceLoader { get; set; }
+    public static Context instance { get; set; }
 
     public Context(
         bool isHost,
@@ -26,6 +28,8 @@ class Context
         this.FrontendGameState = frontendGameState;
         this.Renderer = renderer;
         this.Window = window;
+        this.TileRegistry = new TileRegistry();
+        this.ResourceLoader = new ResourceLoader();
         Context.instance = this;
     }
 

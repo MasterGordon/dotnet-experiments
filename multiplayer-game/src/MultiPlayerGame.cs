@@ -29,6 +29,7 @@ class MultiPlayerGame : Game
                 window
             );
         }
+        Bootstrapper.Bootstrap();
         ctx.Backend.Init();
         ctx.Frontend.Init();
     }

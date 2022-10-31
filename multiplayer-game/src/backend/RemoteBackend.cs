@@ -5,18 +5,24 @@ using System.Text;
 class RemoteBackend : IBackend
 {
     private WatsonTcpClient client;
+    private Publisher publisher;
+    private Queue<ValueType> pendingPackets = new Queue<ValueType>();
+    private uint tick = 0;
 
     public void Process(double dt)
     {
         var ctx = Context.Get();
-        ctx.GameState.PlayerPositions.ForEach(player =>
+        this.ProcessPacket(new TickPacket(tick++));
+        while (pendingPackets.Count > 0)
         {
-            player.position += player.movement;
-        });
+            var packet = pendingPackets.Dequeue();
+            this.ProcessPacket(packet);
+        }
     }
 
     public void ProcessPacket(ValueType packet)
     {
+        this.publisher.Publish(packet);
         var json = JsonConvert.SerializeObject(packet);
         var bytes = Encoding.UTF8.GetBytes(json);
         client.Send(bytes);
@@ -25,6 +31,7 @@ class RemoteBackend : IBackend
     public void Init()
     {
         Task.Run(this.Run);
+        this.publisher = new Publisher(InteractorKind.Client);
     }
 
     public void Run()
