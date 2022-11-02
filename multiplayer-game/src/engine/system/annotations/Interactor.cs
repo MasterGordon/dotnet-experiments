@@ -2,6 +2,7 @@ enum InteractorKind
 {
     Client,
     Server,
+    Hybrid
 }
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]

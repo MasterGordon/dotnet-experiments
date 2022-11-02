@@ -12,7 +12,7 @@ class WorldRenderer : IRenderer
             {
                 for (int x = 0; x < 16; x++)
                 {
-                    var tileId = chunk.Tiles[x][y];
+                    var tileId = chunk.GetTile(x, y);
                     var tile = tileRegistry.GetTile(tileId);
                     tile.Render(x * 16, y * 16);
                 }

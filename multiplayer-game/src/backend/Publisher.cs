@@ -30,7 +30,7 @@ class Publisher
                     continue;
                 }
                 var attr = (Interaction)attrs2[0];
-                if (attr.Kind == InteractorKind.Server && this.kind == InteractorKind.Client)
+                if (attr.Kind != this.kind && this.kind != InteractorKind.Hybrid)
                 {
                     continue;
                 }

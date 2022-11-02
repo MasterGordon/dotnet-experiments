@@ -1,13 +1,3 @@
-using System.Numerics;
-
-class Player
-{
-    public string name;
-    public Vector2 position;
-    public Vector2 movement;
-    public Guid guid;
-}
-
 class FrontendGameState
 {
     public Vector2 MovementInput;

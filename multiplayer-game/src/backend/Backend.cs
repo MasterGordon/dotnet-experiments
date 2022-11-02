@@ -29,7 +29,7 @@ class Backend : IBackend
     public void Init()
     {
         Task.Run(Run);
-        this.publisher = new Publisher(InteractorKind.Server);
+        this.publisher = new Publisher(InteractorKind.Hybrid);
     }
 
     public void Run()

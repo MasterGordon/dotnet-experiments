@@ -37,4 +37,9 @@ class Tile
             16 * scale
         );
     }
+
+    public bool IsSolid()
+    {
+        return true;
+    }
 }

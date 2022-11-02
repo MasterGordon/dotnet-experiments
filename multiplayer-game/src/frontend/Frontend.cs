@@ -37,9 +37,9 @@ class Frontend : IFrontend
                     ctx.FrontendGameState.WindowHeight = e.window.data2;
                     Console.WriteLine($"Window resized to {e.window.data1}x{e.window.data2}");
                     var player = ctx.GameState.Players.Find(
-                        p => p.guid == ctx.FrontendGameState.PlayerGuid
+                        p => p.Guid == ctx.FrontendGameState.PlayerGuid
                     );
-                    ctx.FrontendGameState.Camera.CenterOn(player.position);
+                    ctx.FrontendGameState.Camera.CenterOn(player.Position);
                 }
             }
             if (e.type == SDL_EventType.SDL_KEYDOWN && e.key.repeat == 0)
@@ -128,13 +128,13 @@ class Frontend : IFrontend
         new WorldRenderer().Render();
         ctx.GameState.Players.ForEach(player =>
         {
-            if (player.name == playerName)
+            if (player.Name == playerName)
                 ctx.Renderer.SetColor(0, 0, 255, 255);
             else
                 ctx.Renderer.SetColor(255, 0, 0, 255);
             ctx.Renderer.DrawRect(
-                (player.position.X - (int)camera.position.X) * scale,
-                (player.position.Y - (int)camera.position.Y) * scale,
+                (player.Position.X - (int)camera.position.X) * scale,
+                (player.Position.Y - (int)camera.position.Y) * scale - 10,
                 10,
                 10
             );
